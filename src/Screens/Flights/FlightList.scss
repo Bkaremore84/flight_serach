@@ -1,0 +1,68 @@
+.container{
+    display: flex;
+}
+
+.flight-list-filter-container {
+    display: block;
+    box-shadow: 8px 8px 8px 8px rbga(0, 0, 0, 0.25);
+    padding: 1rem;
+    background-color: gray;
+    border-radius: 10px;
+    margin: 20px;
+    width: 20rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.flight-list-filter-button-contanier{
+    border: 1px solid fff;
+    display: flex;
+    width: 50%;
+    height: 30px;
+    align-self: center;
+    margin: 10px;
+    margin-bottom: 2rem;
+    z-index: 99999;
+}
+.flight-list-filter-button{
+   width: 8rem;
+   text-align: center;
+   color: white;
+}
+
+.flight-list-filter-button-select {
+    // background-color: blue;
+    // font-size: small;
+    // height: 30px;
+    justify-content: center;
+    align-items: center;
+}
+.seprator {
+    height: 30px;
+    border-right: 1px solid #fff;
+}
+.bottomSpace{
+    margin-bottom: 10px;
+}
+
+.passanger-select{
+    border: 1px solid hsl(0, 0%, 80%);
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 2.2rem;
+    width: 100%;
+}
+
+.submit-button{
+    background-color: blue;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid blue;
+    margin-top: 10px;
+    font-weight: 400;
+}
