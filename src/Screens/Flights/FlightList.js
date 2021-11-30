@@ -1,59 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { Col, Row, Button, Form } from 'react-bootstrap';
+import axios from 'axios';
 
 import './FlightList.scss';
-import CustomeSelect from '../../Component/dropdown/CustomeSelect';
-import CustomeDate from '../../Component/CustomeDate/CustomeDate';
+
+import FlightListCard from '../../Component/FlightListCard/FlightListCard';
+import FlightListHeader from '../../Component/FlightListHeader/FlightListHeader';
+import FlightFilter from './FlightFilter';
+
 
 const FlightList = props => {
-  const [originCity, setOriginCity] = useState('');
-  const [destinationCity, setDestinationCity] = useState('');
-  const [depatureDate, setDepatureDate] = useState('');
-  const [returnDate, setReturnDate] = useState('');
+ 
   const [flightsData, setFlightData] = useState([]);
-  const [selectAction, setSelectAction] = useState('OneWay');
+  const [filterObject, setFilterObject] = useState(null);
 
   const getFlightsData = () => {
-
+    axios.get('https://tw-frontenders.firebaseio.com/advFlightSearch.json')
+      .then(res => {
+        if (res?.status === 200) {
+          setFlightData(res?.data);
+        }
+      })
+      .catch(e => console.log(e))
   }
 
   useEffect(() => {
+    getFlightsData();
+  }, []);
 
-  }, [])
+
+  const filterFlight = ()=>{
+    let filterData = flightsData;
+    if(filterObject !== null){
+      filterData = flightsData.filter(data=> 
+        data.origin === filterObject.origin.label &&  data.destination === filterObject.destination.label 
+        && data.date === filterObject.departureDate
+        )
+    }
+    return filterData;
+    }
 
   return (
     <div className='container'>
-      <Form className='flight-list-filter-container'>
-        <Row className='flight-list-filter-button-contanier'>
-          <Col className={selectAction === 'OneWay' && 'flight-list-filter-button flight-list-filter-button-select'}
-            onClick={() => setSelectAction('OneWay')}>One Way</Col>
-          <Col className='seprator' />
-          <Col className={selectAction === 'Return' && 'flight-list-filter-button flight-list-filter-button-select'}
-            onClick={() => setSelectAction('Return')}>Return</Col>
-        </Row>
-        <div className='bottomSpace' />
+      <FlightFilter setFilterObject={setFilterObject}/>
 
-        <CustomeSelect placeholder={'Enter Origin City'} value={originCity} onChange={(city) => setOriginCity(city)} />
-        <div className='bottomSpace' />
-        <CustomeSelect placeholder={'Enter Destination City'} value={destinationCity} onChange={(city) => setDestinationCity(city)} />
-        <div className='bottomSpace' />
+      <div className='flight-list-container'>
+        {filterObject !== null? <FlightListHeader filterObject = {filterObject} flightCount={filterFlight().length}/> : <h3>All flights</h3>}
 
-        <CustomeDate value={depatureDate} onChange={event => setDepatureDate(event.target.value)} placeholder='Depature Date' />
-        <div className='bottomSpace' />
-        <CustomeDate value={returnDate} onChange={event => setReturnDate(event.target.value)} placeholder='Return Date' />
-        <div className='bottomSpace' />
-        <Form.Select placeholder='Select Passangers' className='passanger-select'>
-          <option value="">Select Passanger</option>
-          <option value="Shaym">Shaym</option>
-          <option value="Madhav">Madhav</option>
-          <option value="sam">Sam</option>
-          <option value="Maddy">Maddy</option>
-        </Form.Select>
-        <div className='bottomSpace' />
+        {
+          filterFlight().map((item, index) => <FlightListCard {...item} key={item?.flightNo} />)
+        }
 
-        <Button variant="primary" className='submit-button' bg={'blue'} size='lg' type='submit' onClick={()=>{}}>Submit</Button>
-        
-      </Form>
+      </div>
     </div>
   )
 }

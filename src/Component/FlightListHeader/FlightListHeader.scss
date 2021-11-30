@@ -1,0 +1,22 @@
+.flight-list-header-strip {
+    display: inline-flex;
+    padding: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #f7f5f5;
+    width: 95%;
+  }
+  
+  .flight-list-header-icon {
+    justify-content: center;
+    align-self: center;
+    margin-right: 15px;
+  }
+  .flight-list-header-strip-main-title {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  .flight-list-header-strip-sub-title {
+    font-size: 12px;
+    color: gray;
+  }

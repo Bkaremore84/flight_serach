@@ -1,0 +1,43 @@
+
+$red-color :  #db0723;
+
+.flight-list-card{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border: 1px solid #c2c4c2;
+    padding: 15px 5px;
+}
+.flight-list-card-child{
+    display: inline-block;
+    align-items: center;
+}
+.flight-list-card-main-text{
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+}
+.flight-list-card-sub-text{
+    text-align: center;
+    font-size: 11px;
+    color: #8f8c8c
+}
+.book-btn{
+    background-color: $red-color;
+    border: 1px solid $red-color;
+    padding: 5px 18px;
+    border-radius: 5px;
+    color: white;
+    font-size: 12px;
+}
+
+
+.total-hour{
+    color: #08a145;
+    font-weight: bold;
+}
+.price{
+    color:$red-color;
+    font-weight: bold;
+    font-size: 14px
+}

@@ -1,0 +1,67 @@
+
+.flight-list-filter-container {
+    display: block;
+    box-shadow: 8px 8px 8px 8px rbga(0, 0, 0, 0.25);
+    padding: 1rem;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    margin: 20px;
+    width: 20rem;
+    height: 23rem;
+  }
+  .flight-list-filter-button-container-outer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .flight-list-filter-button-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgb(107, 107, 240);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .flight-list-filter-button {
+    width: 8rem;
+    text-align: center;
+    color: rgb(41, 40, 40);
+    font-size: small;
+  }
+  
+  .flight-list-filter-button-select {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: blue;
+    height: 31px;
+    text-align: center;
+    color: white;
+  }
+  .separator {
+    height: 30px;
+    border-right: 1px solid #fff;
+  }
+  .bottomSpace {
+    margin-bottom: 10px;
+  }
+  
+  .passenger-select {
+    border: 1px solid hsl(0, 0%, 80%);
+    border-radius: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 2.2rem;
+    width: 100%;
+  }
+  
+  .submit-button {
+    background-color: blue;
+    padding: 10px 2rem;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid blue;
+    margin-top: 10px;
+    font-weight: bold;
+    align-items: center;
+  }

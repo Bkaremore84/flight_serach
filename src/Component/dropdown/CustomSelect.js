@@ -1,7 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
 
-const CustomeSelect = ({ placeholder, value, onChange }) => {
+import Error from '../Error/Error';
+
+const CustomSelect = ({ placeholder, value, onChange, error }) => {
   const cities = [
     { value: 1, label: "Pune (PNQ)" },
     { value: 2, label: "Mumbai (BOM)" },
@@ -9,6 +11,7 @@ const CustomeSelect = ({ placeholder, value, onChange }) => {
     { value: 4, label: "Delhi (DEL)" }];
 
   return (
+    <>
     <Select 
       options={cities} 
       isSearchable={true} 
@@ -17,7 +20,9 @@ const CustomeSelect = ({ placeholder, value, onChange }) => {
       onChange={onChange}>
       {cities.map((item) => <option key={item.value} value={item.value}>{item.label}</option>)}
     </Select>
+    <Error error={error}/>
+    </>
   )
 }
 
-export default CustomeSelect
+export default CustomSelect
