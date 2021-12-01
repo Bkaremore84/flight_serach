@@ -8,7 +8,7 @@ import Error from '../../Component/Error/Error';
 import './FlightFilter.scss';
 
 
-const FlightFilter = ({setFilterObject}) => {
+const FlightFilter = ({ setFilterObject, setAction }) => {
   const [originCity, setOriginCity] = useState('');
   const [destinationCity, setDestinationCity] = useState('');
   const [departureDate, setDepartureDate] = useState('');
@@ -22,7 +22,7 @@ const FlightFilter = ({setFilterObject}) => {
   const [selectAction, setSelectAction] = useState('OneWay');
 
   const passengers = [
-    { value: "", label: "Select passengers" },
+    { value: "", label: "Select Passengers" },
     { value: 1, label: "1" },
     { value: 2, label: "2" },
     { value: 3, label: "3" },
@@ -52,16 +52,18 @@ const FlightFilter = ({setFilterObject}) => {
     if (selectPassenger === '') {
       setPassError('Please select passenger.');
     }
-    else if (originCity !== '' && destinationCity !== '' && selectPassenger !== '' && departureDate !== '' && returnDate !== '') {
-     
-      let filterData ={
-        origin: originCity, 
+    else if (originCity !== '' && destinationCity !== '' && selectPassenger !== '' && departureDate !== '' 
+    // && returnDate !== ''
+    ) {
+
+      let filterData = {
+        origin: originCity,
         destination: destinationCity,
         departureDate: departureDate.replace(/\-/g, '/'),
         returnDate: returnDate.replace(/\-/g, '/'),
-        selectPassenger: selectPassenger
-
-      }
+        selectPassenger: selectPassenger,
+        action: selectAction
+       }
       console.log("filterData==>", filterData);
       setFilterObject(filterData);
     }
@@ -70,12 +72,19 @@ const FlightFilter = ({setFilterObject}) => {
   return (
     <Form className='flight-list-filter-container'>
       <div className='flight-list-filter-button-container-outer'>
+
         <Row className='flight-list-filter-button-container'>
           <Col className={`flight-list-filter-button ${selectAction === 'OneWay' && 'flight-list-filter-button-select'}`}
-            onClick={() => setSelectAction('OneWay')}>One Way</Col>
+            onClick={() =>{ 
+              setSelectAction('OneWay');
+              setAction('OneWay');
+              }}>One Way</Col>
           <Col className='separator' />
           <Col className={`flight-list-filter-button ${selectAction === 'Return' && 'flight-list-filter-button-select'}`}
-            onClick={() => setSelectAction('Return')}>Return</Col>
+            onClick={() =>{ 
+              setSelectAction('Return');
+              setAction('Return');
+              }}>Return</Col>
         </Row>
       </div>
       <div className='bottomSpace' />
@@ -99,11 +108,17 @@ const FlightFilter = ({setFilterObject}) => {
       }}
         placeholder='Departure Date' error={depDateError} />
       <div className='bottomSpace' />
-      <CustomDate value={returnDate} onChange={event => {
-        setReturnDate(event.target.value);
-        setRetDateError('');
-      }} placeholder='Return Date' error={retDateError} />
-      <div className='bottomSpace' />
+      {
+        selectAction === 'Return' &&
+        <>
+          <CustomDate value={returnDate}
+            onChange={event => {
+              setReturnDate(event.target.value);
+              setRetDateError('');
+            }} placeholder='Return Date' error={retDateError} />
+          <div className='bottomSpace' />
+        </>
+      }
       <Form.Select className='passenger-select' value={selectPassenger} onChange={event => {
         setPassenger(event.target.value);
         setPassError('');
@@ -114,8 +129,9 @@ const FlightFilter = ({setFilterObject}) => {
       </Form.Select>
       <Error error={passError} />
       <div className='bottomSpace' />
-
+        <div className='submit-button-container'>
       <Button variant="primary" className='submit-button' type='submit' onClick={onSubmitHandler}>Submit</Button>
+      </div>
     </Form>
   )
 }

@@ -1,13 +1,13 @@
 
 .flight-list-filter-container {
-    display: block;
+    // display: block;
     box-shadow: 8px 8px 8px 8px rbga(0, 0, 0, 0.25);
     padding: 1rem;
     background-color: whitesmoke;
     border-radius: 10px;
     margin: 20px;
     width: 20rem;
-    height: 23rem;
+    height: 20rem;
   }
   .flight-list-filter-button-container-outer {
     display: flex;
@@ -27,6 +27,7 @@
     text-align: center;
     color: rgb(41, 40, 40);
     font-size: small;
+    // font-weight: bold;
   }
   
   .flight-list-filter-button-select {
@@ -53,6 +54,7 @@
     padding-right: 10px;
     height: 2.2rem;
     width: 100%;
+    font-size: 16px;
   }
   
   .submit-button {
@@ -64,4 +66,21 @@
     margin-top: 10px;
     font-weight: bold;
     align-items: center;
+  }
+
+  .submit-button-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media only screen and(max-width: 768px) {
+    .flight-list-filter-container {  
+      width: auto;
+      align-content: center;  
+      height: auto;
+    }
+    .flight-list-filter-button{
+      width: 10rem;
+    }
   }

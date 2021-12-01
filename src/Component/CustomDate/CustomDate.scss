@@ -4,8 +4,15 @@
     border: 1px solid hsl(0, 0%, 80%);
     border-radius: 3px;
     padding: 0px 10px;
+    font-size: 16px;
 }
 
 .custom-date-input-invalid{
     border: 1px solid red;
 }
+
+@media only screen and(max-width: 768px) {
+    .custom-date-input {
+      width: 97%;
+    }
+  }

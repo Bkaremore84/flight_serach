@@ -7,7 +7,7 @@ import './FlightListCard.scss';
 const FlightListCard = (item) => {
 
   const totalHours = (departureTime, arrivalTime) => {
-    let result = parseFloat(departureTime).toFixed(2) - parseFloat(arrivalTime).toFixed(2);
+    let result = parseFloat(departureTime.replace(':', '.')) - parseFloat(arrivalTime.replace(':', '.'));
     let finalRes = parseFloat(Math.abs(result)).toFixed(2);
     let splitTime = finalRes.split('.');
     return `${splitTime[0]}h ${splitTime[1]}m`;

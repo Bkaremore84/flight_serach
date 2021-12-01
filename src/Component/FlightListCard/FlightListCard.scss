@@ -1,4 +1,3 @@
-
 $red-color :  #db0723;
 
 .flight-list-card{
@@ -7,6 +6,7 @@ $red-color :  #db0723;
     align-items: center;
     border: 1px solid #c2c4c2;
     padding: 15px 5px;
+    margin-bottom: 10px;
 }
 .flight-list-card-child{
     display: inline-block;
@@ -41,3 +41,21 @@ $red-color :  #db0723;
     font-weight: bold;
     font-size: 14px
 }
+
+@media only screen and(max-width: 768px) {
+    .flight-list-card{  
+     flex-wrap: wrap;
+    }
+    .flight-list-card-child{
+        padding: 1px 5px 1px 5px;
+    }
+  }
+
+  @media only screen and(max-width: 600px) {
+    .flight-list-card{  
+     flex-wrap: wrap;
+    }
+    .flight-list-card-child{
+        padding: 5px 8px 5px 8px;
+    }
+  }
