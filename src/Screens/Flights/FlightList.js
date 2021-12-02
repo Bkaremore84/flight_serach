@@ -6,7 +6,7 @@ import './FlightList.scss';
 import FlightListCard from '../../Component/FlightListCard/FlightListCard';
 import FlightListHeader from '../../Component/FlightListHeader/FlightListHeader';
 import FlightFilter from './FlightFilter';
-
+import Loader from '../../Component/Loader/Loader';
 
 const FlightList = props => {
 
@@ -35,8 +35,8 @@ const FlightList = props => {
     let filterData = flightsData;
     if (filterObject !== null) {
       filterData = flightsData.filter(data =>
-        data.origin === filterObject.origin.label
-        && data.destination === filterObject.destination.label
+        data.origin === filterObject.origin
+        && data.destination === filterObject.destination
         && data.date === filterObject.departureDate
       )
     }
@@ -59,7 +59,7 @@ const FlightList = props => {
 
   return (
     <div className='container'>
-      <FlightFilter setFilterObject={setFilterObject} setAction={setAction}/>
+      <FlightFilter setFilterObject={setFilterObject} setAction={setAction} />
 
       <div className='flight-list-container'>
         <FlightListHeader filterObject={filterObject}
@@ -69,27 +69,27 @@ const FlightList = props => {
 
         {
           action === 'Return' && filterObject != null ?
-          <div className='flight-list-split-container'>
-            <div className='flight-list-split-container-child split-card-full'>
-              {
-                filterFlight().map((item, index) => <FlightListCard {...item} key={item?.flightNo} />)
-              }
-            </div>
-            <div className='flight-list-split-container-child flight-list-split-container-seprator' />
-            <div className='flight-list-split-container-child split-card-full'>
-              {
-                filterReturnFlight().map((item, index) => <FlightListCard {...item} key={item?.flightNo} />)
-              }
-            </div>
+            <div className='flight-list-split-container'>
+              <div className='flight-list-split-container-child split-card-full'>
+                {
+                  filterFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
+                }
+              </div>
+              <div className='flight-list-split-container-child flight-list-split-container-seprator' />
+              <div className='flight-list-split-container-child split-card-full'>
+                {
+                  filterReturnFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
+                }
+              </div>
             </div>
             :
             <>
-             {
-                filterFlight().map((item, index) => <FlightListCard {...item} key={item?.flightNo} />)
+              {
+                filterFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
               }
             </>
-          }
-         
+        }
+
       </div>
     </div>
   )

@@ -15,7 +15,7 @@ const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action
               <GiCommercialAirplane size={25} color={'#a0a3a0'} />
             </div>
             <Row>
-              <Col className='flight-list-header-strip-main-title'>{filterObject?.origin?.label} to {filterObject?.destination?.label}</Col>
+              <Col className='flight-list-header-strip-main-title'>{filterObject?.origin} to {filterObject?.destination}</Col>
               <Col className='flight-list-header-strip-sub-title'>{flightCount} flights found {`  `}
                 {new Date(filterObject?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
                 {`  `}{new Date(filterObject?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
@@ -31,7 +31,7 @@ const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action
                   <GiCommercialAirplane size={25} color={'#a0a3a0'} />
                 </div>
                 <Row>
-                  <Col className='flight-list-header-strip-main-title'>{filterObject?.origin?.label} to {filterObject?.destination?.label}</Col>
+                  <Col className='flight-list-header-strip-main-title'>{filterObject?.origin} to {filterObject?.destination}</Col>
                   <Col className='flight-list-header-strip-sub-title'>{flightCount} flights found {`  `}
                     {new Date(filterObject?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
                     {`  `}{new Date(filterObject?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
@@ -44,7 +44,7 @@ const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action
                   <GiCommercialAirplane size={25} color={'#a0a3a0'} />
                 </div>
                 <Row>
-                  <Col className='flight-list-header-strip-main-title'>{filterObject?.destination?.label} to {filterObject?.origin?.label}</Col>
+                  <Col className='flight-list-header-strip-main-title'>{filterObject?.destination} to {filterObject?.origin}</Col>
                   <Col className='flight-list-header-strip-sub-title'>{returnFlightCount} flights found {`  `}
                     {new Date(filterObject?.returnDate).toLocaleString('en-US', { weekday: 'short' })},
                     {`  `}{new Date(filterObject?.returnDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}

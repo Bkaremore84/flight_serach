@@ -20,6 +20,10 @@ const FlightFilter = ({ setFilterObject, setAction }) => {
   const [retDateError, setRetDateError] = useState('');
   const [passError, setPassError] = useState('');
   const [selectAction, setSelectAction] = useState('OneWay');
+  let multiple =[
+    {search:'Delhi (DEL)', dest : ['Delhi (DEL)', 'Mumbai (BOM)'], orig: ['Pune (PNQ)', 'Mumbai (BOM)']},
+    {search:'Bengaluru (BLR)', dest : ['Bengaluru (BLR)', 'Pune (PNQ)'], orig: ['Mumbai (BOM)', 'Pune (PNQ)']}
+  ]
 
   const passengers = [
     { value: "", label: "Select Passengers" },
@@ -52,13 +56,19 @@ const FlightFilter = ({ setFilterObject, setAction }) => {
     if (selectPassenger === '') {
       setPassError('Please select passenger.');
     }
-    else if (originCity !== '' && destinationCity !== '' && selectPassenger !== '' && departureDate !== '' 
-    // && returnDate !== ''
+    else if (originCity !== '' && destinationCity !== ''
+     && selectPassenger !== '' 
+     && departureDate !== '' 
+    // && (selectAction === 'Return' && returnDate !== '')
     ) {
+      let originDestinationArr = multiple.filter(data => data.search === originCity.label);
+      console.log('origin&originDestinationArr==>',originDestinationArr);
 
       let filterData = {
-        origin: originCity,
-        destination: destinationCity,
+        origin: originCity.label,
+        destination: destinationCity.label,
+        // origin: originDestinationArr.length > 0 ? originDestinationArr : originCity.label,
+        // destination: originDestinationArr.length > 0 ? originDestinationArr : destinationCity.label,
         departureDate: departureDate.replace(/\-/g, '/'),
         returnDate: returnDate.replace(/\-/g, '/'),
         selectPassenger: selectPassenger,

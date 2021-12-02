@@ -1,13 +1,13 @@
 
 .flight-list-filter-container {
     // display: block;
-    box-shadow: 8px 8px 8px 8px rbga(0, 0, 0, 0.25);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 1rem;
     background-color: whitesmoke;
     border-radius: 10px;
     margin: 20px;
     width: 20rem;
-    height: 20rem;
+    height: 23rem;
   }
   .flight-list-filter-button-container-outer {
     display: flex;
@@ -21,6 +21,7 @@
     border: 1px solid rgb(107, 107, 240);
     margin-top: 1rem;
     margin-bottom: 1.5rem;
+    cursor: pointer;
   }
   .flight-list-filter-button {
     width: 8rem;
