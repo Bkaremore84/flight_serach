@@ -32,14 +32,24 @@ const FlightList = props => {
     getFlightsData();
   }, []);
 
+  const calculatePrice =(price)=>{
+    let finalPrice = price;
+    if(filter_data?.selectPassenger){
+    finalPrice = parseFloat(price) * parseInt(filter_data?.selectPassenger);
+    }
+    return parseFloat(finalPrice).toFixed(2);
+  }
+
 
   const filterFlight = () => {
     let filterData = flightsData;
+
     if (filter_data !== null) {
       filterData = flightsData.filter(data =>
         data.origin === filter_data.origin
         && data.destination === filter_data.destination
         && data.date === filter_data.departureDate
+        && (parseFloat(filter_data.price)  > 0 && calculatePrice(data.price) <= parseFloat(filter_data.price))
       )
     }
     return filterData;
@@ -52,6 +62,7 @@ const FlightList = props => {
         data.origin === filter_data.destination
         && data.destination === filter_data.origin
         && data.date === filter_data.returnDate
+        && (parseFloat(filter_data.price)  > 0 && calculatePrice(data.price) <= parseFloat(filter_data.price))
       )
     }
     return filterData;

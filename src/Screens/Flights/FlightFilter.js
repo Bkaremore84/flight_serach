@@ -23,9 +23,11 @@ const FlightFilter = ({ setAction }) => {
   const [retDateError, setRetDateError] = useState('');
   const [passError, setPassError] = useState('');
   const [selectAction, setSelectAction] = useState('OneWay');
-  let multiple =[
-    {search:'Delhi (DEL)', dest : ['Delhi (DEL)', 'Mumbai (BOM)'], orig: ['Pune (PNQ)', 'Mumbai (BOM)']},
-    {search:'Bengaluru (BLR)', dest : ['Bengaluru (BLR)', 'Pune (PNQ)'], orig: ['Mumbai (BOM)', 'Pune (PNQ)']}
+  const [price, setPrice] = useState(0);
+
+  let multiple = [
+    { search: 'Delhi (DEL)', dest: ['Delhi (DEL)', 'Mumbai (BOM)'], orig: ['Pune (PNQ)', 'Mumbai (BOM)'] },
+    { search: 'Bengaluru (BLR)', dest: ['Bengaluru (BLR)', 'Pune (PNQ)'], orig: ['Mumbai (BOM)', 'Pune (PNQ)'] }
   ]
 
   const passengers = [
@@ -60,12 +62,12 @@ const FlightFilter = ({ setAction }) => {
       setPassError('Please select passenger.');
     }
     else if (originCity !== '' && destinationCity !== ''
-     && selectPassenger !== '' 
-     && departureDate !== '' 
-    // && (selectAction === 'Return' && returnDate !== '')
+      && selectPassenger !== ''
+      && departureDate !== ''
+      // && (selectAction === 'Return' && returnDate !== '')
     ) {
       let originDestinationArr = multiple.filter(data => data.search === originCity.label);
-      console.log('origin&originDestinationArr==>',originDestinationArr);
+      console.log('origin&originDestinationArr==>', originDestinationArr);
 
       let filterData = {
         origin: originCity.label,
@@ -75,8 +77,9 @@ const FlightFilter = ({ setAction }) => {
         departureDate: departureDate.replace(/\-/g, '/'),
         returnDate: returnDate.replace(/\-/g, '/'),
         selectPassenger: selectPassenger,
-        action: selectAction
-       }
+        action: selectAction,
+        price: price
+      }
       console.log("filterData==>", filterData);
       filterContext.setFilterData(filterData);
     }
@@ -88,16 +91,16 @@ const FlightFilter = ({ setAction }) => {
 
         <Row className='flight-list-filter-button-container'>
           <Col className={`flight-list-filter-button ${selectAction === 'OneWay' && 'flight-list-filter-button-select'}`}
-            onClick={() =>{ 
+            onClick={() => {
               setSelectAction('OneWay');
               setAction('OneWay');
-              }}>One Way</Col>
+            }}>One Way</Col>
           <Col className='separator' />
           <Col className={`flight-list-filter-button ${selectAction === 'Return' && 'flight-list-filter-button-select'}`}
-            onClick={() =>{ 
+            onClick={() => {
               setSelectAction('Return');
               setAction('Return');
-              }}>Return</Col>
+            }}>Return</Col>
         </Row>
       </div>
       <div className='bottomSpace' />
@@ -137,14 +140,21 @@ const FlightFilter = ({ setAction }) => {
         setPassError('');
       }} >
         {
-          passengers.map((item, index) => <option value={item.value} key={item.value}>{item.label}</option>)
+          passengers.map((item) => <option value={item.value} key={item.value}>{item.label}</option>)
         }
       </Form.Select>
       <Error error={passError} />
-
       <div className='bottomSpace' />
-        <div className='submit-button-container'>
-      <Button variant="primary" className='submit-button' type='submit' onClick={onSubmitHandler}>Submit</Button>
+
+      <div className='price-range'>
+        <label className='price-range-label'>Select price range : &#8377; {`${parseFloat(price).toFixed(2)}`}</label> {`  `}
+        <input type='range' min='0' max='10000' step={1} className='price-range-input' value={price} 
+               onChange={event => setPrice(event.target.value)} />
+      </div>
+      <div className='bottomSpace' />
+
+      <div className='submit-button-container'>
+        <Button variant="primary" className='submit-button' type='submit' onClick={onSubmitHandler}>Submit</Button>
       </div>
     </Form>
   )
