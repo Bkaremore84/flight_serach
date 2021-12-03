@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {FilterContextProvider} from '../src/Contex/FlightContext';
 
 ReactDOM.render(
   <React.StrictMode>
+    <FilterContextProvider>
     <App />
+    </FilterContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

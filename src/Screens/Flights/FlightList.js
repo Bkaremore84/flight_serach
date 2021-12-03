@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import './FlightList.scss';
@@ -6,13 +6,14 @@ import './FlightList.scss';
 import FlightListCard from '../../Component/FlightListCard/FlightListCard';
 import FlightListHeader from '../../Component/FlightListHeader/FlightListHeader';
 import FlightFilter from './FlightFilter';
-import Loader from '../../Component/Loader/Loader';
+import FilterContext from '../../Contex/FlightContext';
 
 const FlightList = props => {
 
+  const { filter_data, clearFilterData } = useContext(FilterContext);
+  
   const [flightsData, setFlightData] = useState([]);
-  const [returnflightsData, setReturnFlightData] = useState([]);
-  const [filterObject, setFilterObject] = useState(null);
+  const [returnFlightsData, setReturnFlightData] = useState([]);
   const [action, setAction] = useState('OneWay');
 
   const getFlightsData = () => {
@@ -27,69 +28,67 @@ const FlightList = props => {
   }
 
   useEffect(() => {
+    clearFilterData();
     getFlightsData();
   }, []);
 
 
   const filterFlight = () => {
     let filterData = flightsData;
-    if (filterObject !== null) {
+    if (filter_data !== null) {
       filterData = flightsData.filter(data =>
-        data.origin === filterObject.origin
-        && data.destination === filterObject.destination
-        && data.date === filterObject.departureDate
+        data.origin === filter_data.origin
+        && data.destination === filter_data.destination
+        && data.date === filter_data.departureDate
       )
     }
-    console.log("filter list ==>", filterData)
     return filterData;
   }
 
   const filterReturnFlight = () => {
-    let filterData = returnflightsData;
-    if (filterObject !== null) {
-      filterData = returnflightsData.filter(data =>
-        data.origin === filterObject.destination.label
-        && data.destination === filterObject.origin.label
-        && data.date === filterObject.returnDate
+    let filterData = returnFlightsData;
+    if (filter_data !== null) {
+      filterData = returnFlightsData.filter(data =>
+        data.origin === filter_data.destination
+        && data.destination === filter_data.origin
+        && data.date === filter_data.returnDate
       )
     }
-    console.log("filter return list ==>", filterData)
     return filterData;
   }
 
   return (
     <div className='container'>
-      <FlightFilter setFilterObject={setFilterObject} setAction={setAction} />
+      <FlightFilter setAction={setAction} />
 
       <div className='flight-list-container'>
-        <FlightListHeader filterObject={filterObject}
+        <FlightListHeader
           flightCount={filterFlight().length}
           returnFlightCount={filterReturnFlight().length}
           action={action} />
 
         {
-          action === 'Return' && filterObject != null ?
+          action === 'Return' && filter_data != null ?
             <div className='flight-list-split-container'>
               <div className='flight-list-split-container-child split-card-full'>
                 {
-                  filterFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
+                  filterFlight().map((item, index) => <FlightListCard {...item} key={index} />)
                 }
               </div>
               <div className='flight-list-split-container-child flight-list-split-container-seprator' />
               <div className='flight-list-split-container-child split-card-full'>
                 {
-                  filterReturnFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
+                  filterReturnFlight().map((item, index) => <FlightListCard {...item} key={index} />)
                 }
               </div>
             </div>
             :
             <>
               {
-                filterFlight().map(item => <FlightListCard {...item} key={item?.flightNo} />)
+                filterFlight().map((item, index) => <FlightListCard {...item} key={index} />)
               }
             </>
         }
-
       </div>
     </div>
   )

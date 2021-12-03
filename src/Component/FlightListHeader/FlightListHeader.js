@@ -1,29 +1,31 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { GiCommercialAirplane } from "react-icons/gi";
-import { Row, Col, Container } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 
 import './FlightListHeader.scss';
+import FilterContext from '../../Contex/FlightContext';
 
-const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action }) => {
+const FlightListHeader = ({ flightCount, returnFlightCount, action }) => {
+  const {filter_data} = useContext(FilterContext);
 
   return (
     <div className='flight-list-header-strip'>
       {
-        action === 'OneWay' && filterObject !== null ?
+        action === 'OneWay' && filter_data !== null ?
           <div className='flight-list-header-strip-return-outer'>
             <div className='flight-list-header-icon'>
               <GiCommercialAirplane size={25} color={'#a0a3a0'} />
             </div>
             <Row>
-              <Col className='flight-list-header-strip-main-title'>{filterObject?.origin} to {filterObject?.destination}</Col>
+              <Col className='flight-list-header-strip-main-title'>{filter_data?.origin} to {filter_data?.destination}</Col>
               <Col className='flight-list-header-strip-sub-title'>{flightCount} flights found {`  `}
-                {new Date(filterObject?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
-                {`  `}{new Date(filterObject?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
-                {new Date(filterObject?.departureDate).toLocaleString('en-US', { month: 'long' })}</Col>
+                {new Date(filter_data?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
+                {`  `}{new Date(filter_data?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
+                {new Date(filter_data?.departureDate).toLocaleString('en-US', { month: 'long' })}</Col>
             </Row>
           </div>
           :
-          action === 'Return' && filterObject !== null ?
+          action === 'Return' && filter_data !== null ?
             <div className='flight-list-header-strip-return'>
 
               <div className='flight-list-header-strip-return-outer'>
@@ -31,11 +33,11 @@ const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action
                   <GiCommercialAirplane size={25} color={'#a0a3a0'} />
                 </div>
                 <Row>
-                  <Col className='flight-list-header-strip-main-title'>{filterObject?.origin} to {filterObject?.destination}</Col>
+                  <Col className='flight-list-header-strip-main-title'>{filter_data?.origin} to {filter_data?.destination}</Col>
                   <Col className='flight-list-header-strip-sub-title'>{flightCount} flights found {`  `}
-                    {new Date(filterObject?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
-                    {`  `}{new Date(filterObject?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
-                    {new Date(filterObject?.departureDate).toLocaleString('en-US', { month: 'long' })}</Col>
+                    {new Date(filter_data?.departureDate).toLocaleString('en-US', { weekday: 'short' })},
+                    {`  `}{new Date(filter_data?.departureDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
+                    {new Date(filter_data?.departureDate).toLocaleString('en-US', { month: 'long' })}</Col>
                 </Row>
               </div>
 
@@ -44,11 +46,11 @@ const FlightListHeader = ({ filterObject, flightCount, returnFlightCount, action
                   <GiCommercialAirplane size={25} color={'#a0a3a0'} />
                 </div>
                 <Row>
-                  <Col className='flight-list-header-strip-main-title'>{filterObject?.destination} to {filterObject?.origin}</Col>
+                  <Col className='flight-list-header-strip-main-title'>{filter_data?.destination} to {filter_data?.origin}</Col>
                   <Col className='flight-list-header-strip-sub-title'>{returnFlightCount} flights found {`  `}
-                    {new Date(filterObject?.returnDate).toLocaleString('en-US', { weekday: 'short' })},
-                    {`  `}{new Date(filterObject?.returnDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
-                    {new Date(filterObject?.returnDate).toLocaleString('en-US', { month: 'long' })}</Col>
+                    {new Date(filter_data?.returnDate).toLocaleString('en-US', { weekday: 'short' })},
+                    {`  `}{new Date(filter_data?.returnDate).toLocaleString('en-US', { day: '2-digit' })} {`  `}
+                    {new Date(filter_data?.returnDate).toLocaleString('en-US', { month: 'long' })}</Col>
                 </Row>
               </div>
             </div>

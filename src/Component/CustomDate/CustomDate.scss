@@ -1,6 +1,6 @@
-.custom-date-input{
+.custom-date-input{ 
     height: 2.2rem;
-    width: 93%;
+    width: 18rem;
     border: 1px solid hsl(0, 0%, 80%);
     border-radius: 3px;
     padding: 0px 10px;
@@ -14,5 +14,22 @@
 @media only screen and(max-width: 768px) {
     .custom-date-input {
       width: 97%;
+    }
+  }
+
+  @media only screen and(max-width: 650px) {
+    .custom-date-input {
+     width: 96%;
+    }
+ }
+
+  @media only screen and(max-width: 500px) {
+     .custom-date-input {
+      width: 95%;
+     }
+  }
+  @media only screen and(max-width: 400px) {
+    .custom-date-input {
+      width: 93%;
     }
   }

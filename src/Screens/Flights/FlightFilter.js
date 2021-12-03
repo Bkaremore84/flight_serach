@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Col, Row, Button, Form } from 'react-bootstrap';
 
 import CustomSelect from '../../Component/dropdown/CustomSelect';
 import CustomDate from '../../Component/CustomDate/CustomDate';
 import Error from '../../Component/Error/Error';
+import FilterContext from '../../Contex/FlightContext';
 
 import './FlightFilter.scss';
 
 
-const FlightFilter = ({ setFilterObject, setAction }) => {
+const FlightFilter = ({ setAction }) => {
+
+  const filterContext = useContext(FilterContext);
   const [originCity, setOriginCity] = useState('');
   const [destinationCity, setDestinationCity] = useState('');
   const [departureDate, setDepartureDate] = useState('');
@@ -75,12 +78,12 @@ const FlightFilter = ({ setFilterObject, setAction }) => {
         action: selectAction
        }
       console.log("filterData==>", filterData);
-      setFilterObject(filterData);
+      filterContext.setFilterData(filterData);
     }
   }
 
   return (
-    <Form className='flight-list-filter-container'>
+    <Form className={`flight-list-filter-container ${selectAction === 'OneWay' && 'flight-list-filter-container-height'}`}>
       <div className='flight-list-filter-button-container-outer'>
 
         <Row className='flight-list-filter-button-container'>
@@ -138,6 +141,7 @@ const FlightFilter = ({ setFilterObject, setAction }) => {
         }
       </Form.Select>
       <Error error={passError} />
+
       <div className='bottomSpace' />
         <div className='submit-button-container'>
       <Button variant="primary" className='submit-button' type='submit' onClick={onSubmitHandler}>Submit</Button>

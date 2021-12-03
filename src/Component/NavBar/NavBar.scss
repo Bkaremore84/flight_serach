@@ -4,15 +4,14 @@
 }
 .navbar-title {
     color: white;
-    padding: 1rem;
+    padding: 1.2rem;
     justify-content: center;
-    font-weight: bold;
     font-size: larger;
+    text-align: center;
 }
-
 
 @media(min-width: 600px) {
     .navbar-title {
-      width: 100%;
+      // width: 100%;
     }
   }
