@@ -5,6 +5,7 @@ import CustomSelect from '../../Component/dropdown/CustomSelect';
 import CustomDate from '../../Component/CustomDate/CustomDate';
 import Error from '../../Component/Error/Error';
 import FilterContext from '../../Contex/FlightContext';
+import Loader from '../../Component/Loader/Loader';
 
 import './FlightFilter.scss';
 
@@ -12,6 +13,7 @@ import './FlightFilter.scss';
 const FlightFilter = ({ setAction }) => {
 
   const filterContext = useContext(FilterContext);
+  const [loading, setLoading] = useState(false);
   const [originCity, setOriginCity] = useState('');
   const [destinationCity, setDestinationCity] = useState('');
   const [departureDate, setDepartureDate] = useState('');
@@ -24,6 +26,7 @@ const FlightFilter = ({ setAction }) => {
   const [passError, setPassError] = useState('');
   const [selectAction, setSelectAction] = useState('OneWay');
   const [price, setPrice] = useState(0);
+  const [btnDisabled, setBtnDisabled] = useState(true);
 
   let multiple = [
     { search: 'Delhi (DEL)', dest: ['Delhi (DEL)', 'Mumbai (BOM)'], orig: ['Pune (PNQ)', 'Mumbai (BOM)'] },
@@ -46,29 +49,29 @@ const FlightFilter = ({ setAction }) => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
+   
     if (originCity === '') {
-      setOriginCityError('Please select origin city.');
+      setOriginCityError('Please select origin city');
     }
     if (destinationCity === '') {
-      setDesCityError('Please select destination city.');
+      setDesCityError('Please select destination city');
     }
     if (departureDate === '') {
-      setDepDateError('Please select departure date.');
+      setDepDateError('Please select departure date');
     }
     if (returnDate === '') {
-      setRetDateError('Please select return date.');
+      setRetDateError('Please select return date');
     }
     if (selectPassenger === '') {
-      setPassError('Please select passenger.');
+      setPassError('Please select passenger');
     }
     else if (originCity !== '' && destinationCity !== ''
       && selectPassenger !== ''
       && departureDate !== ''
       // && (selectAction === 'Return' && returnDate !== '')
     ) {
+      setLoading(true);
       let originDestinationArr = multiple.filter(data => data.search === originCity.label);
-      console.log('origin&originDestinationArr==>', originDestinationArr);
-
       let filterData = {
         origin: originCity.label,
         destination: destinationCity.label,
@@ -80,13 +83,25 @@ const FlightFilter = ({ setAction }) => {
         action: selectAction,
         price: price
       }
-      console.log("filterData==>", filterData);
       filterContext.setFilterData(filterData);
+      setLoading(false);
     }
+  }
+
+  const disableButton = (selectPass, selectedPassError)=>{
+      if(originCityError !== '' || desCityError !== '' || depDateError !== '' || selectedPassError !== ''){
+        setBtnDisabled(true);
+      }
+
+      if(originCity !== '' && destinationCity !== '' && departureDate !== '' && selectPass !== '' && originCityError === '' 
+       && desCityError === '' && depDateError === '' && selectedPassError === ''){
+        setBtnDisabled(false);
+      }
   }
 
   return (
     <Form className={`flight-list-filter-container ${selectAction === 'OneWay' && 'flight-list-filter-container-height'}`}>
+      {loading && <Loader/>}
       <div className='flight-list-filter-button-container-outer'>
 
         <Row className='flight-list-filter-button-container'>
@@ -108,12 +123,14 @@ const FlightFilter = ({ setAction }) => {
       <CustomSelect placeholder={'Enter Origin City'} value={originCity} onChange={(city) => {
         setOriginCity(city);
         setOriginCityError('');
+        disableButton(selectAction);
       }}
         error={originCityError} />
       <div className='bottomSpace' />
       <CustomSelect placeholder={'Enter Destination City'} value={destinationCity} onChange={(city) => {
         setDestinationCity(city);
         setDesCityError('');
+        disableButton(selectAction);
       }}
         error={desCityError} />
       <div className='bottomSpace' />
@@ -121,6 +138,7 @@ const FlightFilter = ({ setAction }) => {
       <CustomDate value={departureDate} onChange={event => {
         setDepartureDate(event.target.value);
         setDepDateError('');
+        disableButton(selectAction);
       }}
         placeholder='Departure Date' error={depDateError} />
       <div className='bottomSpace' />
@@ -138,6 +156,7 @@ const FlightFilter = ({ setAction }) => {
       <Form.Select className='passenger-select' value={selectPassenger} onChange={event => {
         setPassenger(event.target.value);
         setPassError('');
+        disableButton(event.target.value, '');
       }} >
         {
           passengers.map((item) => <option value={item.value} key={item.value}>{item.label}</option>)
@@ -146,15 +165,15 @@ const FlightFilter = ({ setAction }) => {
       <Error error={passError} />
       <div className='bottomSpace' />
 
-      <div className='price-range'>
+      {/* <div className='price-range'>
         <label className='price-range-label'>Select price range : &#8377; {`${parseFloat(price).toFixed(2)}`}</label> {`  `}
         <input type='range' min='0' max='10000' step={1} className='price-range-input' value={price} 
                onChange={event => setPrice(event.target.value)} />
       </div>
-      <div className='bottomSpace' />
+      <div className='bottomSpace' /> */}
 
       <div className='submit-button-container'>
-        <Button variant="primary" className='submit-button' type='submit' onClick={onSubmitHandler}>Submit</Button>
+        <Button variant="primary" className={`submit-button ${btnDisabled && 'submit-button-disable'}`} type='submit' onClick={onSubmitHandler} disabled={btnDisabled}>Submit</Button>
       </div>
     </Form>
   )

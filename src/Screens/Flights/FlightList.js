@@ -7,6 +7,7 @@ import FlightListCard from '../../Component/FlightListCard/FlightListCard';
 import FlightListHeader from '../../Component/FlightListHeader/FlightListHeader';
 import FlightFilter from './FlightFilter';
 import FilterContext from '../../Contex/FlightContext';
+import Loader from '../../Component/Loader/Loader';
 
 const FlightList = props => {
 
@@ -40,16 +41,19 @@ const FlightList = props => {
     return parseFloat(finalPrice).toFixed(2);
   }
 
+  const testPrice =(price)=>{
+    return calculatePrice(price) <= filter_data?.price;
+  }
+
 
   const filterFlight = () => {
     let filterData = flightsData;
-
     if (filter_data !== null) {
       filterData = flightsData.filter(data =>
         data.origin === filter_data.origin
         && data.destination === filter_data.destination
         && data.date === filter_data.departureDate
-        && (parseFloat(filter_data.price)  > 0 && calculatePrice(data.price) <= parseFloat(filter_data.price))
+        // && (filter_data.price > 0 && testPrice(data.price))
       )
     }
     return filterData;
@@ -62,7 +66,7 @@ const FlightList = props => {
         data.origin === filter_data.destination
         && data.destination === filter_data.origin
         && data.date === filter_data.returnDate
-        && (parseFloat(filter_data.price)  > 0 && calculatePrice(data.price) <= parseFloat(filter_data.price))
+        // && (filter_data?.price && testPrice(data.price))
       )
     }
     return filterData;
@@ -78,7 +82,9 @@ const FlightList = props => {
           returnFlightCount={filterReturnFlight().length}
           action={action} />
 
-        {
+        { flightsData.length === 0 || returnFlightsData.length === 0 ?
+        <Loader/>
+        :
           action === 'Return' && filter_data != null ?
             <div className='flight-list-split-container'>
               <div className='flight-list-split-container-child split-card-full'>

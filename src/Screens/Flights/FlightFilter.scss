@@ -6,7 +6,7 @@
     border-radius: 10px;
     margin: 20px;
     width: 20rem;
-    height: 28rem;
+    height: 29rem;
   }
   .flight-list-filter-container-height{
     height: 25rem;
@@ -48,7 +48,6 @@
     text-align: center;
     color: rgb(41, 40, 40);
     font-size: small;
-    // font-weight: bold;
   }
   
   .flight-list-filter-button-select {
@@ -87,6 +86,16 @@
     margin-top: 10px;
     font-weight: bold;
     align-items: center;
+  }
+  .submit-button-disable {
+    background-color: gray;
+    // padding: 10px 2rem;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid gray;
+    // margin-top: 10px;
+    // font-weight: bold;
+    // align-items: center;
   }
 
   .submit-button-container{
